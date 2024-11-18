@@ -5,8 +5,11 @@ function TableCurrency() {
   const [currency, setCurrency] = useState([])
 
   useEffect(() => {
+    const apiUrl = import.meta.env.VITE_API_URL
+    const apiKey = import.meta.env.VITE_API_KEY
+
     axios
-      .get("https://api.currencyfreaks.com/v2.0/rates/latest?apikey=c304b96fb413438b850c354f7d3dacd5")
+      .get(`${apiUrl}?apikey=${apiKey}`)
       .then((res) => {
         setCurrency(res.data.rates)
       })
@@ -21,12 +24,9 @@ function TableCurrency() {
     currency: currencyCode,
     rate: currency[currencyCode]
   }))
+  // console.log(filteredCurrency)
 
-  console.log(filteredCurrency)
-
-  
   function countWeBuy(uangAwal, persen) {
-
     let ubahKeNumber = parseFloat(uangAwal)
     let tambahan = ubahKeNumber * (persen / 100)
     let totalUang = ubahKeNumber + tambahan
@@ -35,7 +35,6 @@ function TableCurrency() {
   }
 
   function countWeSell(uangAwal, persen) {
-
     let ubahKeNumber = parseFloat(uangAwal)
     let tambahan = ubahKeNumber * (persen / 100)
     let totalUang = ubahKeNumber - tambahan
@@ -43,26 +42,9 @@ function TableCurrency() {
     return totalUang
   }
 
-// function countWeBuy(uangAwal, persen) {
-//     let ubahKeNumber = parseFloat(uangAwal)
-//     if (isNaN(ubahKeNumber)) return "Invalid Rate"
-//     let tambahan = ubahKeNumber * (persen / 100)
-//     let totalUang = ubahKeNumber + tambahan
-//     return totalUang.toFixed(2)
-//   }
-
-//   function countWeSell(uangAwal, persen) {
-//     let ubahKeNumber = parseFloat(uangAwal)
-//     if (isNaN(ubahKeNumber)) return "Invalid Rate"
-//     let tambahan = ubahKeNumber * (persen / 100)
-//     let totalUang = ubahKeNumber - tambahan
-//     return totalUang.toFixed(2)
-//   }
-
   return (
     <div style={{ backgroundColor: "#FA812F", minHeight: "100vh" }} className="d-flex align-items-center justify-content-center">
       <div className="container">
-        
         <table className="table table-border table-hover my-5">
           <thead>
             <tr>
@@ -88,7 +70,6 @@ function TableCurrency() {
             <p style={{ margin: 0 }}>Rates are based from 1 USD.</p>
             <p style={{ margin: 0 }}>This application uses API from https://currencyfreaks.com.</p>
         </div>
-
       </div>
     </div>
   );
